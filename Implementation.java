@@ -10,6 +10,15 @@
 
 
 import java.util.Scanner;
+import java.util.Random;
+
+import Creatures.Bat;
+import Creatures.Creature;
+import Creatures.Goblin;
+import Creatures.RedSlime;
+import Creatures.Slime;
+import Creatures.Undead;
+import Creatures.SpecialAttack;
 
 public class Implementation {
 
@@ -58,7 +67,12 @@ public class Implementation {
         Creature enemy = new Creature();
         switch (makeEnemy) {
             case 0:
-                enemy = new RedSlime();
+                Random rand = new Random();
+                int random = rand.nextInt(100);
+                    if (random < 80){enemy = new RedSlime();}
+                    else if (random >= 80 && random < 95){enemy = new Slime();}
+                    else if (random >= 95){enemy = new Slime();}
+                    else{System.out.println("Error");}
                 break;
             case 1:
                 enemy = new Bat(); // ZUBAAAAAAt
@@ -243,7 +257,7 @@ public class Implementation {
                             if (enemy.getHP() > 0) {
 
                                 int damage = curr.getDamage() / (1 + mc.getDef()); // dapat ito kayang tanggapin kahit sp attack
-                                System.out.println(enemy.getName() + " attacks!\n");
+                                System.out.println(enemy.getName() + " attacks using " + curr.getName() +"\n");
                                 mc.setHP(mc.getHP() - damage);
                                 System.out.println(mc.getUsername() + " took " + damage + " damage!\n");
 

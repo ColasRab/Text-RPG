@@ -1,24 +1,12 @@
-class SpecialAttack{
-    private int damage, MPCost;
-    private String attackName;
+package Creatures;
 
-    public SpecialAttack sp(int damage, int MPCost, String attackName){
-        this.damage = damage;
-        this.MPCost = MPCost;
-        this.attackName = attackName;
-        return this;
-    }
-
-    public int getDamage(){
-        return damage;
-    }
-}
+import java.util.Random;
 
 public class Creature {
     private int HP, MP, Vit, Inte, Atk, Def, Spd, Level, Exp;
     private String name;
 
-    public Creature(){
+    public Creature() {
         Vit = 0;
         Inte = 0;
         HP = 0;
@@ -29,7 +17,7 @@ public class Creature {
         name = " ";
     }
 
-    public Creature(int Vit, int Inte, int Atk, int Def, int Spd, int Level, int Exp, String name){
+    public Creature(int Vit, int Inte, int Atk, int Def, int Spd, int Level, int Exp, String name) {
         this.HP = Vit;
         this.MP = Inte;
         this.Vit = Vit;
@@ -42,85 +30,108 @@ public class Creature {
         this.name = name;
     }
 
-    public void setAtk(int atk){
+    public void setAtk(int atk) {
         this.Atk = atk;
     }
-    public void setHP(int hp){
+
+    public void setHP(int hp) {
         this.HP = hp;
     }
-    public void setMP(int mp){
+
+    public void setMP(int mp) {
         this.MP = mp;
     }
-    public void setVit(int vit){
+
+    public void setVit(int vit) {
         this.Vit = vit;
     }
-    public void setInte(int inte){
+
+    public void setInte(int inte) {
         this.Inte = inte;
     }
-    public void setDef(int def){
+
+    public void setDef(int def) {
         this.Def = def;
     }
-    public void setExperience(int exp){
+
+    public void setExperience(int exp) {
         this.Exp = exp;
     }
-    public void setLevel(int lvl){
+
+    public void setLevel(int lvl) {
         this.Level = lvl;
     }
 
-
-    public int getHP(){
+    public int getHP() {
         return HP;
     }
-    public int getMP(){
+
+    public int getMP() {
         return MP;
     }
-    public int getVit(){
+
+    public int getVit() {
         return Vit;
     }
-    public int getInte(){
+
+    public int getInte() {
         return Inte;
     }
-    public int getAtk(){
+
+    public int getAtk() {
         return Atk;
     }
-    public int getDef(){
+
+    public int getDef() {
         return Def;
     }
-    public int getSpd(){
+
+    public int getSpd() {
         return Spd;
     }
-    public int getLevel(){
+
+    public int getLevel() {
         return Level;
     }
-    public int getExp(){
+
+    public int getExp() {
         return Exp;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public SpecialAttack Atk(Creature enemy){
+
+    public SpecialAttack Atk(Creature enemy) {
         SpecialAttack curr = new SpecialAttack();
+        Random rand = new Random();
         switch (enemy.getName()) {
             case "Red Slime":
-            if (enemy.getMP() > 10){
-                curr = curr.sp(90, 10, "Red Gush");
-                enemy.setMP(enemy.getMP() - 10);
-            }
+                int gacha = rand.nextInt(100);
+                if (enemy.getMP() > 10 && gacha > 80) {
+                    curr = curr.sp(90, 10, "Red Gush");
+                    enemy.setMP(enemy.getMP() - 10);
+                }
                 break;
             case "Golden Slime":
-                if (enemy.getMP() > 10){
+                gacha = rand.nextInt(100);
+                if (enemy.getMP() > 10 && gacha > 50 && gacha <= 90) {
                     curr = curr.sp(0, 10, "Golden Solidify");
                     enemy.setMP(enemy.getMP() - 10);
-                    enemy.setDef((int)(enemy.getDef()*1.5));
+                    enemy.setDef((int) (enemy.getDef() * 1.5));
                 }
-                if (enemy.getMP() > 10){
+                else if (enemy.getMP() > 10 && gacha > 90) {
                     curr = curr.sp(90, 10, "Golden Gush");
                     enemy.setMP(enemy.getMP() - 10);
                 }
             default:
                 break;
         }
-        
+
+        if (curr == null){
+            curr = curr.sp(enemy.getAtk(), 0, "Basic Attack");
+        }
+
         return curr;
     }
 }

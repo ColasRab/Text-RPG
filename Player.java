@@ -1,3 +1,5 @@
+import Creatures.Creature;
+
 public class Player extends Creature {
     private String Username;
     private int targetExp = 5;
